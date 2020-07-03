@@ -1,2 +1,2 @@
-# syncope
+# Syncope
 Apache Syncope
