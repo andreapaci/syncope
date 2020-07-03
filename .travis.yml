@@ -1,0 +1,31 @@
+
+language: java
+os: linux
+dist: bionic
+arch: amd64
+jdk:
+  - openjdk11
+cache:
+  bundler: false
+  cargo: false
+  directories:
+    - '$HOME/.m2'
+
+addons:
+  sonarcloud:
+    organization: andreapaci
+    token: 775acf9c7021f1585cd4b02c50c451b6b20a3b3b
+
+git:
+  depth: 2
+env:
+  global:
+  - MAVEN_OPTS="-Xmx4096M -Xss128M -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -noverify"
+  - JAVAEE_CONTAINER=Tomcat
+  - DBMS=H2
+  - jaxrsContentType=application/json
+
+before_install:
+- wget https://github.com/sormuras/bach/raw/master/install-jdk.sh -O ~/install-jdk.sh && chmod +x ~/install-jdk.sh
+install: mvn -U -T 1C -q clean test -Dinvoker.streamLogs=true -Dmodernizer.skip=true -Dianal.skip=true -Drat.skip=true -Dcheckstyle.skip=true -Dsass.skip=true -Dmaven.javadoc.skip=true
+script: mvn verify -q -Ppit sonar:sonar -Dsonar.projectKey=andreapaci_syncope -Dinvoker.streamLogs=true -Dmodernizer.skip=true -Dianal.skip=true -Drat.skip=true -Dcheckstyle.skip=true -Dsass.skip=true -Dmaven.javadoc.skip=true
