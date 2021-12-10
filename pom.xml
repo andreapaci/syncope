@@ -448,7 +448,7 @@ under the License.
     
     <joda.version>2.10.6</joda.version>
 
-    <cas.version>6.2.0-SNAPSHOT</cas.version>
+    <cas.version>6.4.2</cas.version>
 
     <h2.version>1.4.200</h2.version>
 
